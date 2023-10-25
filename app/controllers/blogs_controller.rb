@@ -9,7 +9,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    @blog = Blog.find(prams[:id])
+    @blog = Blog.find(params[:id])
   end
 
  def create
@@ -19,22 +19,26 @@ class BlogsController < ApplicationController
 
  def destroy
    @blog = Blog.find(params[:id])
-   @blog.destory
+   @blog.destroy
    redirect_to blogs_path, notice: "削除しました"
  end
 
  def edit
    @blog = Blog.find(params[:id])
-   if @blog.update(blog_parameter)
-     redirect_to blog_path, notice: "編集しました"
-   else
-     render 'edit'
-   end
+
  end
+  def update
+    @blog = Blog.find(params[:id])
+    if @blog.update(blog_parameter)
+      redirect_to blogs_path, notoce: "編集しました"
+    else
+      render 'edit'
+    end
+  end
 
 private
-def blog_parameter
+ def blog_parameter
   params.require(:blog).permit(:title, :content, :start_time)
-end
+ end
 
 end
